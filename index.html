@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="Rodrigo Santos" content="">
+
+    <title>Complador</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/vendor/devicons/css/devicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/resume.min.css" rel="stylesheet">
+    <link href="assets/css/resume.css" rel="stylesheet">
+  </head>
+
+  <body id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+     <img  src="assets/img/logoSaoJudas.png" alt="" style="width:150px">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#introducao">Introdução</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#estrutura">A Estrutura do Compilador</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#codigo">Código</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#lexica">Análise Léxica e seus autômatos envolvidos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#sintatica">Análise Sintática, Árvore de derivação e GLC </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#lFonte">Linguaguem Fonte</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#novasConstrucoes">Novas Construções do Compilador</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#arvoreDerivacao">FOR e Operador ternário</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#novaArvore">Nova Linguagem Fonte e Árvore de derivação</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#conclusao">Conclusão</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#referencias">Referências</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#nilone">Equipe Nil One</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid p-0">
+
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="introducao">
+        <div class="my-auto">
+          <h1 class="mb-0">Introdução:
+            <span class="text-primary">Compilador</span>
+          </h1>
+          <br>
+          <p class="mb-5">
+            Conhecer como um compilador funciona é essencial para entender a ligação entre Engenharia de Software, Linguagens de Programação, Sistemas Operacionais e Arquitetura de Computadores, uma vez que a construção de compiladores abrange tais áreas de estudo em Ciências da Computação. O desafio dos projetistas de compiladores é criar algoritmos mais eficientes que visem obter um melhor desempenho no uso de memória e processamento.
+            Podemos entender que, o compilador converte um programa originado de uma linguagem de programação para uma linguagem que possa ser entendida e executada por um computador. Durante a compilação são executadas tarefas que fazem a tradução de uma linguagem em outra. Para isso, o compilador deve preservar o significado do programa a ser compilado e melhorar o programa de entrada de tal forma que seja perceptível.
+            Utiliza-se ferramentas que facilitam a criação e manutenção de compiladores, como, por exemplo, Java, C e C++, que geram códigos que podem ser incluídos no projeto do compilador. Um exemplo são os geradores de analisadores léxicos, que com base em expressões regulares geram um algoritmo capaz de identificar os elementos léxicos de uma linguagem de programação.
+            O compilador deve traduzir um conjunto infinito de programas escritos em uma linguagem de programação e o resultado desse processo precisa ser um código eficiente que deve ser executado em diversas arquiteturas de processadores.
+            Em resumo, uma linguagem de programação é considerada de alto nível quando sua representação está próxima do domínio da aplicação e do problema a ser resolvido. Os computadores por sua vez possuem sua própria linguagem denominada de baixo nível ou linguagem de máquina.
+            Os compiladores são utilizados justamente para traduzir a linguagem de alto nível (linguagem de programação) posta na entrada fonte, para uma linguagem de baixo nível ou conforme mencionamos anteriormente, linguagem de máquina, que é a saída.
+            </p>
+
+          <img  src="assets/img/introducao_imagem.png" alt="" style="width:600px">
+
+
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="estrutura">
+        <div class="my-auto">
+            <h2 class="mb-5">A Estrutura do Compilador</h2>
+            <br>
+            <p class="mb-5">
+            
+            Quando pensamos no processo de compilação, devemos pensar que sua estrutura se divide em fases e essas são representadas por duas tarefas, análise e síntese.
+            A tarefa de análise também chamada de front-end divide o programa fonte em partes e impõe uma estrutura gramatical sobre elas, uma das principais responsabilidades da tarefa de análise é garantir que a sintaxe e semântica do programa fonte estejam corretos. 
+            A tarefa de síntese constrói o programa objeto a partir da representação criada na tarefa de análise. A síntese é conhecida como back-end.
+
+            </p>
+
+             <img  src="assets/img/estrutura_imagem.png" alt="" style="width:600px">
+          <br>
+          <p class="mb-5">
+            
+            Resumidamente, o processo de análise inicia-se com o analisador léxico que percorre todo o programa fonte e transforma o texto em um fluxo de tokens, a criando a tabela de símbolos. Em seguida passamos pela análise sintática que lê o fluxo de tokens e valida a estrutura do programa criando a árvore sintática. A terceira fase é a análise semântica que é responsável por garantir as regras semânticas. 
+
+            </p>
+
+            <p class="mb-5">
+            
+           <h4><strong>Fases Front-End:</strong> </h4>
+           <br>
+            <ul> 
+              <li> <strong> Análise léxica:</strong>
+              
+                  <p>É a primeira fase do processo de compilação, que tem como objetivo identificar unidades lexicais ou lexemas, lendo todos os caracteres do programa fonte e verificando se eles pertencem ao alfabeto da linguagem. Caso um caractere não pertença, deve ser gerado um erro léxico. Esse processo resulta um conjunto de tokens (símbolos léxicos) que são formados por palavras reservadas,nessa etapa é criada a tabela de símbolos. <p> 
+                  O analisador léxico deve achar 6 lexemas e saber qual categoria correspondem. Deve também, permitir identificar na linguagem repetições de subconjuntos permitindo que seja possível identificar e classificar esses subconjuntos, por exemplo subconjunto de palavras reservadas.
+                  Nessa fase o processamento de uma linguagem pode ser feito por gramáticas regulares podendo ser formalmente descrito por expressões regulares. As rotinas que processam essa linguagem modelam algoritmos construídos a partir de autômatos finitos.</p>
+              </li>
+              <li> <strong> Análise Sintática:</strong>
+
+                  <p> Nessa etapa o objetivo é reconhecer se a estrutura gramatical do código fonte está de acordo com as regras sintáticas da linguagem, ou seja, validar a gramática do programa. Faz- se uma varredura na sequência de tokens recebidas do analisador léxico, logo após, é produzida uma estrutura de dados em formato de árvore conhecida como árvore sintática (é uma estrutura de dados em forma de árvore ou grafo que representa sequência hierárquica da linguagem de programação ou programa fonte e permite representar cada elemento do programa e os demais passos do compilador). Caso uma construção seja reconhecida com inválida um erro sintético deve ser gerado.</p>
+              </li>
+              <li><strong>Análise Semântica:</strong> 
+                  
+                  <p>Nesta última etapa, verificamos se a semântica do programa fonte tem consistência (não possui erros) e a partir da utilização da a árvore sintática junto às informações contidas na tabela de símbolos podemos gerar uma lista de tarefas.
+                  </p>
+            </li>
+          </ul>
+        </div>
+
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="codigo">
+        <div class="my-auto">
+          <h2 class="mb-5">Código</h2>
+
+        <p class="mb-5">
+
+           <p> 
+            O código Java para o Front-End do compilador é composto por cinco pacotes, armazenados como um diretório e separado com um arquivo por classe, são eles: main, lexer, symbol, parser e inter - que possuem diferentes funções dentro da aplicação. 
+           </p>
+            <p>
+            O pacote <b>inter</b> possui classes para as construções da linguagem da sintaxe abstrata. O pacote <b>main </b> possui a classe que executa o algoritmo criando o analisador léxico e o analisador sintático. Pacote <b>lexer</b> é uma extensão do código para o analisador léxico. Pacote <b>parser</b> lê o fluxo de token e constrói a árvore sintática. Pacote <b>symbols</b>implementa as tabelas de símbolos e tipos.
+            </p>
+            <ul>
+              <li> <p> No pacote <b>inter</b> existem 23 classes:</p>
+                  <p>
+                    A classe <b>Node</b> é a principal do pacote inter, a partir dela são criadas outras subclasses, exemplo <b>Expr</b> e </b>Stmt</b>.
+                  </p>
+                  <p>
+                    <b>Expr</b> é a classe que trata booleanos e desvios condicionais, possui os campos op e type, que representam operadores e tipos para expressão declarada.
+                  </p>
+                  <p>
+                   A classe <b>Id</b> é apenas utilizada como identificador de endereço, como em um banco de dados onde um registro possui sua chave primária (ID).
+                  </p>
+                  <p>
+                    A classe <b>Op</b> interpreta operadores aritméticos, unários e de acessos a arranjo (array).
+                    <b>Arith</b> implementa operadores binários. <b>Temp</b> é a classe utilizada para armazenar variáveis temporariamente. 
+                    <b>Unary</b> é o correspondente de um operando da classe Arith, para operadores de comparação entre dois termos.
+                  </p>
+                  <p>
+                    <b>Constant</b> é a classe que cria um objeto constante a partir de um inteiro.
+                    <b>Logical</b> é responsável pela criação do nó de sintaxe para os operadores de comparação OR, AND, NOT. 
+                    <b>Or</b>, <b>And</b>, <b>Not</b> são classes de um operadores lógicos. 
+                  </p>
+                  <p>   
+                        A classe <b>Rel</b> implementa operadores unários e verifica se há dois termos sendo comparados.
+                        Access classe de acessos a arranjos (array).
+                  </p>
+                  <p>
+                        <b>Stmt</b> é uma classe parecida com a Node que trata da construção da árvore de sintaxe.
+                  </p>
+                  <p>
+                        <b>If</b>,<b>Else</b>,<b>While</b>,<b>Do</b> são classes de desvio condicional e laços de repetição.
+                  </p>
+                        <b>Set</b> constrói nós e verifica tipos. <b>SetElem</b> implementa atribuições ao arranjo.
+                        <b>Seq</b> implementa uma sequência de comandos.
+                        <b>Break</b> é utilizada para interrupção de um comando em execução.
+                  </p>
+              </li>
+               <li> <p> No pacote <b>lexer</b> existem 6 classes:</p> 
+                    <p>
+                        O pacote é uma extensão do analisador léxico para o compilador.
+                        A classe <b>Tag</b> define constantes para serem utilizadas no algoritmo.
+                        As classes <b>Token</b> e <b>Num</b> extendem a classe Tag, pois recebem um valor de constante e o retorna com o toString.
+                        A classe <b>Word</b> gerencia lexemas para palavras reservadas.
+                        A <b>Real</b> é para números de ponto flutuante (float).
+                        Por fim, a classe <b>Lexer</b> possui o método scan que reconhece números, identificadores e as palavras reservadas, também reserva lexemas para objetos definidos em outras classes.
+                    </p>
+              </li>
+              <li> <p> No pacote pacote parser temos a classe <b>Parser</b>: </p> 
+                    <p>
+                      Responsável pela análise sintática do compilador. Onde lê um fluxos de tokens e constrói a árvore de sintaxe chamando as funções correta.
+                    </p>
+              </li>
+              <li> <p> E no pacote <b>symbols</b> temos 3 classes:<p>
+                  <p>
+                        Este pacote é usado para implementação de símbolos e tipos.
+                        A classe <b>Env</b> mapeia os tokens de palavras a objetos classe Id definida no pacote inter.
+                        A classe <b>Type</b> é uma subclasse de Word porque os nomes dos tipos básicos (basic), são apenas palavras reservadas, a serem mapeadas de lexemas para objetos apropriados pelo analisador léxico. Os tipos possuem campo herdado de tag, de modo que o analisador sintático os trate da mesma maneira.
+                        E a classe <b>Array</b> herda o campo width da classe Type, essencial para o arranjo.
+                  </p>
+              </li>
+
+            </ul>
+        </p>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="lexica">
+        <div class="my-auto">
+          <h2 class="mb-5">Análise Léxica e seus autômatos envolvidos</h2>
+            <p class="mb-5">
+
+                Tokens podem ser reconhecidos por meio de autômatos finitos, sendo que o estado final dispara o reconhecimento de um token específico e/ou um procedimento específico (inserir na tabela de símbolo, por exemplo). Normalmente constrói-se um diagrama de transição para representar o reconhecimento de tokens.
+              <ul>
+                <li>
+                  <p> Palavras reservadas:</p>
+                  <img  src="assets/img/palavras_reservadas.png" alt="" style="width:600px">
+                </li>
+                <li>
+                  <p>Constantes (Números reais, inteiros):</p>
+                  <img  src="assets/img/constantes.png" alt="" style="width:600px">
+                </li>
+                <li>
+                  <p>Cadeia de caracteres:</p>
+                  <img  src="assets/img/cadeia_caracteres.png" alt="" style="width:600px">
+                </li>
+                <li>
+                  <p>Sinais de pontuação (delimitadores):</p>
+                  <img  src="assets/img/sinais_pontuacao.png" alt="" style="width:600px">
+                </li>
+                <li>
+                  <p>Sinais de operação lógico:</p>
+                  <img  src="assets/img/sinais_logico.png" alt="" style="width:600px">
+                </li>
+                <li>
+                  <p>Sinais de Operação relacional e de atribuição:</p>
+                  <img  src="assets/img/sinais_relacional_atribuicao.png" alt="" style="width:600px">
+                </li>
+                <li>
+                  <p>Sinais de Operação aritmético:</p>
+                  <img  src="assets/img/sinais_aritmetico.png" alt="" style="width:600px">
+                </li>
+                <li>
+                  <p>Caracteres especiais:</p>
+                  <img  src="assets/img/caracteres_especiais.png" alt="" style="width:600px">
+                </li>
+                <li>
+                  <p>Identificadores:</p>
+                  <img  src="assets/img/Identificadores.png" alt="" style="width:600px">
+                </li>
+
+
+              </ul>
+            </p>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="sintatica">
+        <div class="my-auto">
+          <h2 class="mb-5">Análise Sintática,Árvore de derivação e Gramática Livre de Contexto </h2>
+            <p class="mb-5">
+              <p>
+              A sintaxe é a parte da gramática que estuda a disposição das palavras na frase e das frases em um discurso. Essa etapa no processo de compilação deve reconhecer as formas do programa fonte e determinar se ele é válido ou não.
+              </p>
+              <p>
+              Esse modelo pode ser definido utilizando <b>gramáticas livres de contexto</b> que representam uma gramática formal e pode ser escrita através de algoritmos que fazem a derivação de todas as possíveis construções da linguagem.
+              </p>
+              <p>
+              Essas derivações tem como objetivo determinar se um fluxo de palavras se encaixa na sintaxe da linguagem de programação.
+              Para isso, existem alguns termos utilizados na definição de linguagens de programação:
+              </p>
+                <ul>
+                  <li>
+                    <b>Símbolo:</b> São os elementos mínimos que compõe uma linguagem (1, 5, +, w).
+                  </li>
+                  <li>
+                    <b>Sentença:</b> É um conjunto ordenado de símbolos que forma uma cadeia ou string (palavras) (while, 123,+1).
+                  </li>  
+                  <li>  
+                    <b>Alfabeto:</b> É um conjunto de símbolos {w, h, i, l, e, +, 1, 2, 3}.
+                  </li>
+                  <li>
+                    <b>Linguagem:</b> É o conjunto de sentenças,ou conjuntos de palavras {compiladores, linguagem, ...}
+                  </li>
+                  <li>
+                    <b>Gramática:</b> É uma forma de representar as regras para formação de uma linguagem,G = < S, N, P, S >.
+                  </li>
+                </ul>
+
+              <p>
+                Explicando melhor, dada uma gramática <b>G</b> e uma sentença <b>S</b> o objetivo do analisador sintático é verificar se a sentença <b>S</b> pertence a linguagem <b>G</b>. O analisador sintático recebe do analisador léxico a sequência de tokens que constitui a sentença <b>S</b> e produz uma árvore de derivação se a sentença é válida ou emite um erro se a sentença é inválida.
+              </p>
+              <p>
+                O analisador sintático vê o mesmo texto que o léxico, porém como uma sequência de sentenças que deve satisfazer às regras gramaticais. E através da gramática podemos validar expressões criadas na linguagem de programação. O analisador sintático agrupa os tokens em frases gramaticais usadas pelo compilador com o objetivo de criar uma saída que representa a estrutura hierarquia do programa fonte.
+              </p>
+              <h4><strong>Partindo para o GLC:</strong> </h4>
+              <p>
+                As linguagens de programação em geral pertencem a uma categoria chamada de Linguagens Livres de Contexto. Umas das formas de representar essas linguagens é através de Gramáticas Livres de Contexto que são a base para a construção de analisadores sintáticos. Elas são utilizadas para especificar as regras sintáticas de uma linguagem de programação, uma linguagem regular e pode ser reconhecida por um autômato finitos determinísticos e não determinísticos, já uma Gramática Livre de Contexto pode ser reconhecida por um autômato de pilha, por exemplo.
+              </p>
+              <p>
+                Como mencionado anteriormente, a definição da GLC é a seguinte: < S, N, P, S >, onde <b>N – Conjunto finito de símbolos não terminais</b> (Conjunto finito de variáveis utilizadas para representar os conjuntos da linguagem, são formadas pelos terminais e pelos próprios símbolos não terminais), <b>T – Conjunto finito de símbolos terminais</b> (Conjunto finito de símbolos básicos que formam as palavras da linguagem, são representadas pelo tokens reconhecidos pelo analisador léxico), <b>P – Conjunto de regras de produções</b> (Representa um conjunto de regras sintáticas que representam a definição da linguagem, indicam como símbolos terminais e não terminais podem ser combinados) representado pela (→) flecha e <b>S – Símbolo inicial da gramática</b> (É a variável, símbolo não terminal, que representa o início da definição da linguagem).
+              </p>
+              <strong>Exemplo:</strong>
+                <p> G = ({S}, {a, b}, P, S)</p>
+                P = { <p class="margem_exemplos">
+                S → aSb<p class="margem_exemplos">
+                S → e <p class="margem_exemplos">
+                }
+              </p>
+              <br>
+              <p>
+                A gramática acima é formada pelas terminais <b>a</b> e <b>b</b>, que são os <b>tokens</b> da linguagem, como regras de produção  temos <b>aSb</b> que obriga ter um <b>a</b> e <b>b</b> nas extremidades da palavras, o símbolo <b>λ</b> (ou em alguns casos "e") que significa vazio.
+              </p>
+              <p>
+                Durante o processo de derivação devemos aplicar as regras de produção para substituir cada símbolo não-terminal por um símbolo terminal, isso permite identificar se certa cadeia de caracteres pertence a linguagem, as regras expandem todas as produções possíveis. Como resultado desse processo temos a árvore de derivação.
+              </p>
+                O processo de derivação pode ser executado de duas maneiras, examinando os símbolos terminais da esquerda para a direita montando a árvore sintática de cima para baixo (top-down) ou examinando os símbolos terminais da direita para a esquerda montando a árvore de baixo para cima (bottom-top). É importante ressaltar que a árvore de análise sintática está diretamente relacionada à existência de derivações e independente do algoritmo utilizado, essa derivação deve produzir o mesmo resultado, ou seja a mesma árvore de derivação, caso seja diferente, temos uma ambiguidade.
+              </p>
+              <p>
+                A árvore de derivação representa a derivação de uma sentença (palavras) ou conjunto de sentenças (linguagem), essa estrutura irá gerar as árvores de análise sintática que representa o programa fonte, facilitando as etapas seguintes da compilação.
+              </p>
+              <p> Como resultado temos o seguinte resultado do exemplo anterior: </p>
+              <img  src="assets/img/arvore_exemplo.png" alt="" style="width:350px">
+              </p>
+            </p>
+
+            <p>
+              Com relação à <b>ambiguidade</b>, certas gramáticas permitem que uma mesma sentença (palavra) tenha mais de uma árvore de derivação, isso torna a gramática inadequada para a linguagem de programação, pois o compilador não pode determinar a estrutura desse programa fonte. Duas derivações podem gerar uma única árvore sintática, conforme mencionado anteriormente, mas duas árvores sintáticas não podem ser geradas por uma derivação.
+            </p>
+            <p>
+              Uma ambiguidade por ser evitada de duas formas:
+            </p>
+            <p>
+              <ul>
+                
+                <p>1. Reescrevendo a gramática a fim de remover a ambiguidade, deixando-a mais complexa.
+                </p>
+                <p>
+                2. Definir ordens de prioridade durante a derivação.
+                </p>
+              </ul>
+              <p>
+              <p> Veja um exemplo de uma gramática ambígua. </p>
+              
+              <p> Dada a seguinte gramática utilizada para reconhecer as principais operações aritméticas: </p>
+              
+              <p> G = ({E}, {+, *, ( , ), x}, P,  E) </p>
+
+                p {<p class="margem_exemplos">
+                    E → E + E <p class="margem_exemplos">
+                    E → E * E <p class="margem_exemplos">
+                    E → (E) <p class="margem_exemplos">
+                    E → x <p class="margem_exemplos">
+                    E → λ <p class="margem_exemplos">
+                } <p>
+                <br>
+                <p>
+                  Suponha que queremos validar a seguinte sentença x + x * x. </p>
+                    <ul>
+                       <li> 
+                        Derivação mais à esquerda:  E ⇒ E+E ⇒ x+E ⇒ x+E*E ⇒ x+x*E ⇒ x+x*x
+                      </li>
+                      <li>
+                        Derivação mais à direita: E ⇒ E*E ⇒ E*x ⇒ E+E*x ⇒ E+x*x ⇒ x+x*x
+                      </li>
+                    </ul>
+                <p>Observe que duas árvores sintáticas foram geradas para essa sentença, logo temos uma ambiguidade.</p>
+                <img  src="assets/img/ambiguidade.png" alt="" style="width:600px">
+                </p>
+                <p>
+                  Reescrevendo essa gramática para evitar a ambiguidade, temos o seguinte resultado.</p>
+
+                    <p>G = ({E}, {+, *, (, ), x}, P,  E) </p>
+                   
+                    P { <p class="margem_exemplos">
+                        E → T + E | T <p class="margem_exemplos">
+                        T → x * T <p class="margem_exemplos">
+                        E → x <p class="margem_exemplos">
+                        E → (E) * T <p class="margem_exemplos">
+                        E → (T) <p class="margem_exemplos">
+                        E → λ <p class="margem_exemplos">
+                    }<p>
+
+                <p> 
+                  Não existe algoritmo capaz de eliminar a ambiguidade, nesses casos é necessário aplicar a técnicas de eliminação de ambiguidade. 
+                </p>
+            </p>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="lFonte">
+        <div class="my-auto">
+          <h2 class="mb-5">Linguagem Fonte</h2>
+          <p class="mb-5">
+            <p class="margem_exemplos">
+                    program → block <p class="margem_exemplos">
+                      <ul>
+                        block → { decls stmts } <p class="margem_exemplos">
+                        decls → decls decl | E <p class="margem_exemplos">
+                        decl → type id ; <p class="margem_exemplos">
+                        type → type [num] | basic <p class="margem_exemplos">
+                        stmts → stmts stmt | E <p class="margem_exemplos">
+                        stmt → loc = bool ; <p class="margem_exemplos">
+                        <uL>
+                          | if ( bool ) stmt <p class="margem_exemplos">
+                          | if ( bool ) stmt else stmt <p class="margem_exemplos">
+                          | while ( bool ) stmt <p class="margem_exemplos">
+                          | do stmt while ( bool ); <p class="margem_exemplos">
+                          | break ; <p class="margem_exemplos">
+                          | block <p class="margem_exemplos">
+                        </ul>
+                        loc → loc [booI] | id <p class="margem_exemplos">
+
+                        bool → bool || join | join <p class="margem_exemplos">
+                        join → join && equality | equality <p class="margem_exemplos">
+                        equality → equality == rel | equality ! = rel | rel <p class="margem_exemplos">
+                        rel → expr < expr | expr <= expr | expr >= expr | expr > expr | expr <p class="margem_exemplos">
+
+                        expr → expr + term | expr - term | term <p class="margem_exemplos">
+                        term → term * unary | term / unary | unary <p class="margem_exemplos">
+                        unary → !unary | - unary | factor <p class="margem_exemplos">
+                        factor → ( bool ) | loc | num | real | true | false <p class="margem_exemplos">
+                      </ul>
+            <p>Esboço da árvore sintática do compilador:</p>
+            <img  src="assets/img/esboco1_original.png" alt="" style="width:600px">
+            <img  src="assets/img/esboco2_original.png" alt="" style="width:600px">
+            <img  src="assets/img/esboco3_original.png" alt="" style="width:600px">
+         </p>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="novasConstrucoes">
+        <div class="my-auto">
+          <h2 class="mb-5">Novas construções para o Compilador</h2>
+          <p class="mb-5">
+              <p>
+                Além das funções já existentes no compilador, foi necessário a inclusão de mais duas, são elas: <b>FOR</b> e <b>Operador Ternário</b>.
+              </p>
+              <p>
+                O laço for é uma estrutura de repetição compacta. Seus elementos de inicialização, 
+                condição e iteração são reunidos na forma de um cabeçalho e o corpo é disposto em seguida.
+              </p>
+              <p>
+                Veja a sintaxe geral de uma estrutura <b>for</b>:
+              </p>
+              <p>
+                <b> For (int i = 0 ; boolean ; i++)</b>
+              </p>
+              <p>
+                Observe que a inicialização, condição e iteração aparecem entre parênteses, após a palavra reservada "for" e elas são separadas apenas por um ponto e vírgula. 
+              </p>
+              <p>
+                Diagrama de transição para representar o reconhecimento do token for:
+              </p>
+              <img  src="assets/img/for.png" alt="" style="width:600px">
+              <p>
+                O operador ternário é um recurso para tomada de decisões com objetivo similar ao do if/else, mas que é codificado em apenas uma linha.
+              </p>
+              <p>
+                Sintaxe do <b>operador ternário</b>:
+              </p>
+              <p>
+                <b>(expressão booleana) ? código 1 : código 2; </b>
+              </p>
+              <p>
+                    Ao avaliar a expressão booleana, caso ela seja verdadeira, o código 1, declarado após o ponto de interrogação (?) será executado; do contrário, o programa irá executar o código 2, declarado após os dois pontos (:).
+              </p>
+              <p>
+                    Diagrama de transição para representar o reconhecimento do token <b>Operador Ternário</b>:
+              </p>
+              <img  src="assets/img/operador_ternario.png" alt="" style="width:600px">
+              </p>
+          </p>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="arvoreDerivacao">
+        <div class="my-auto">
+          <h2 class="mb-5">FOR e Operador ternário (Árvore de derivação)</h2>
+          <p class="mb-5">
+            <p> <b>Stmt → FOR (bool) stmt;</b> </p>
+              <img  src="assets/img/arvorederivacao_for.png" alt="arvore de derivação for" style="width:300px">
+          </p>
+          <p> <b> Stmt → iFTernario (bool) stmt stmt; </b> </p>
+              <img  src="assets/img/arvorederivacao_op.png" alt="arvore de derivação for" style="width:300px">
+          </p>
+        </div>
+      </section>
+
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="novaArvore">
+        <div class="my-auto">
+          <h2 class="mb-5">Nova Linguagem Fonte e Árvore de derivação</h2>
+          <p class="mb-5">
+            <p class="margem_exemplos">
+                    program → block <p class="margem_exemplos">
+                      <ul>
+                        block → { decls stmts } <p class="margem_exemplos">
+                        decls → decls decl | E <p class="margem_exemplos">
+                        decl → type id ; <p class="margem_exemplos">
+                        type → type [num] | basic <p class="margem_exemplos">
+                        stmts → stmts stmt | E <p class="margem_exemplos">
+                        stmt → loc = bool ; <p class="margem_exemplos">
+                        <uL>
+                          | if ( bool ) stmt <p class="margem_exemplos">
+                          | if ( bool ) stmt else stmt <p class="margem_exemplos">
+                          <b>| Stmt → iFTernario (bool) stmt stmt;</b><p class="margem_exemplos">
+                          | while ( bool ) stmt <p class="margem_exemplos">
+                          <b>| Stmt → FOR (bool) stmt;</b><p class="margem_exemplos">
+                          | do stmt while ( bool ); <p class="margem_exemplos">
+                          | break ; <p class="margem_exemplos">
+                          | block <p class="margem_exemplos">
+                        </ul>
+                        loc → loc [booI] | id <p class="margem_exemplos">
+
+                        bool → bool || join | join <p class="margem_exemplos">
+                        join → join && equality | equality <p class="margem_exemplos">
+                        equality → equality == rel | equality ! = rel | rel <p class="margem_exemplos">
+                        rel → expr < expr | expr <= expr | expr >= expr | expr > expr | expr <p class="margem_exemplos">
+
+                        expr → expr + term | expr - term | term <p class="margem_exemplos">
+                        term → term * unary | term / unary | unary <p class="margem_exemplos">
+                        unary → !unary | - unary | factor <p class="margem_exemplos">
+                        factor → ( bool ) | loc | num | real | true | false <p class="margem_exemplos">
+                      </ul>
+            <p>Esboço da Nova árvore sintática do compilador:</p>
+            <img  src="assets/img/for_ternario.png" alt="" style="width:600px">
+            <img  src="assets/img/esboco2_original.png" alt="" style="width:600px">
+            <img  src="assets/img/esboco3_original.png" alt="" style="width:600px">
+         </p>
+        </div>
+      </section>
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="conclusao">
+        <div class="my-auto">
+          <h2 class="mb-5">Conclusão</h2>
+          <p class="mb-5">
+            <p>De acordo com a proposta apresentada no início do semestre, obtivemos êxito em todo os aspectos práticos e teóricos para implementação do compilador. Percebe-se que as fases léxicas e sintáticas são importantes para a identificação do código fonte (linguagem de alto nível), sendo utilizadas para a construção de uma nova linguagem (linguagem de baixo nível), chamada linguagem de máquina.</p>
+
+            <p>Em nosso projeto, a inclusão das duas novas construções (for e operador ternário), garantem que o compilador execute instruções, vindas do código fonte, sem nenhum erro, sendo capaz de alcançar os resultados esperados.</p>
+
+          </p>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="referencias">
+        <div class="my-auto">
+          <h2 class="mb-5">Referências</h2>
+          <p class="mb-5"> 
+            <ul>
+              <li> <a href="https://johnidm.gitbooks.io/compiladores-para-humanos/content/part1/structure-of-a-compiler.html">johnidm</a>
+            </li>
+              
+            <li> <a href="http://www.eduardosan.com/wp-content/uploads/2016/07/aula10.pdf">Eduardosan</a>
+            </li>
+
+            <li><a href="http://www.informatik.uni-bremen.de/agbkb/lehre/ccfl/Material/ALSUdragonbook.pdf">CAHO, A.V. ; SETHI, S. & ULMMAN, J. D. Compiladores; Princípios, técnicas e ferramentas.2a Ed.</a> 
+            </li>
+                
+
+            <li><a href="https://inf.ufes.br/~tavares/labcomp2000/aula52.htm">inf.ufes.br</a></li>
+
+            <li>
+              <a href="http://docs.fct.unesp.br/docentes/dmec/olivete/compiladores/arquivos/Aula1.pdf">docs.fct.unesp.br</a>
+            </li>
+
+            </ul>
+          </p>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="nilone">
+        <div class="my-auto">
+          <h2 class="mb-5">Grupo 05</h2>
+          <p class="mb-5"> 
+          <div class="row">
+              <ul class="row-col-6 fonteGrande">
+                <li> Fabrício Caires - R.A.:816155552 </li>
+                <li> Guilherme Santos - R.A.: 81617569</li>
+                <li>Jorge Sampaio - R.A.: 81513901</li>
+                <li>Leonardo Siqueira Pessanha - R.A.: 816123578 </li>
+                <li> Renan Gouveia Dutra da Silva - R.A.: 816114946 </li>
+                <li> Rodrigo Silva dos Santos - R.A.: 816155559 </li>
+              </ul>
+              <div class="row-col-6">
+                <img  src="assets/img/nilone.png" alt="" style="width:410px">
+            </div>
+          </div>
+          </p>
+          <h3 class="mb-0">
+             <span class="text-primary">Orientação:</span>
+              Prof. Dra. Milkes Yone Alvarenga
+          </h3>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="assets/js/resume.min.js"></script>
+
+  </body>
+
+</html>
